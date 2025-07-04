@@ -11,7 +11,7 @@ const Home = ({ onAddToCart }) => {
 
   const sendVoiceToServer = async (transcript) => {
     try {
-      const response = await fetch("http://localhost:5000/api/ai/recommend", {
+      const response = await fetch("https://e-commerce-application-backend-3qqr.vercel.app/api/ai/recommend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: transcript }),
@@ -20,7 +20,7 @@ const Home = ({ onAddToCart }) => {
       const data = await response.json();
 
       if (data.tags && data.tags.length > 0) {
-        setSearchQuery(data.tags.join(" ")); // Update search input with AI tags
+        setSearchQuery(data.tags.join(" "));
       }
     } catch (err) {
       console.error("Voice API Error:", err);
@@ -40,7 +40,6 @@ const Home = ({ onAddToCart }) => {
         Shop smart with voice search and AI recommendations.
       </p>
 
-      {/* 🔍 Search Bar */}
       <div className="flex justify-center mb-6">
         <input
           type="text"
@@ -51,16 +50,15 @@ const Home = ({ onAddToCart }) => {
         />
       </div>
 
-      {/* 🎤 Voice Search */}
       <VoiceSearch
         onSearch={handleVoiceSearch}
         sendToServer={sendVoiceToServer}
       />
 
-      {/* 🛒 Product List */}
       <ProductList onAddToCart={onAddToCart} filter={searchQuery} />
     </section>
   );
 };
 
 export default Home;
+
